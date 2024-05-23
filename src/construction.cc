@@ -16,7 +16,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     G4Material *worldMat = nist->FindOrBuildMaterial("G4_AIR"); // ROI(boundary) & material
     
     
-    // 设置探测器材料构成：气凝胶（aerogel）SiO2, H2O, C
+    // 设置产生切伦科夫辐射的材料构成：气凝胶（aerogel）SiO2, H2O, C
     G4Material *SiO2 = new G4Material("SiO2", 2.201*g/cm3, 2);
     SiO2->AddElement(nist->FindOrBuildElement("Si"), 1);
     SiO2->AddElement(nist->FindOrBuildElement("O"), 2);
@@ -45,7 +45,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     mptWorld->AddProperty("RINDEX", energy, rindexWorld, 2);
     worldMat->SetMaterialPropertiesTable(mptWorld);
 
-    // world和探测器几何设置
+    // 几何设置
     G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); // solid world
     G4LogicalVolume *logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld"); // logical world
     G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true); // physical world
