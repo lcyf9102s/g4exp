@@ -25,11 +25,11 @@ int main(int argc, char** argv)
 
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
     UImanager->ApplyCommand("/vis/open OGL");
-    UImanager->ApplyCommand("/vis/viewer/set/viewpointVector 1 1 1");
-    UImanager->ApplyCommand("/vis/drawVolume");
-    UImanager->ApplyCommand("/vis/viewer/set/autoRefresh true");
+    UImanager->ApplyCommand("/vis/viewer/set/viewpointVector 1 1 1"); // 观察点位置坐标
+    UImanager->ApplyCommand("/vis/drawVolume"); // 显示几何结构
+    UImanager->ApplyCommand("/vis/viewer/set/autoRefresh true"); // 自动刷新on
     UImanager->ApplyCommand("/vis/scene/add/trajectories smooth");
-    UImanager->ApplyCommand("/vis/scene/endOfEventAction accumulate");
+    UImanager->ApplyCommand("/vis/scene/endOfEventAction accumulate"); // 累积径迹
 
     ui->SessionStart();
 

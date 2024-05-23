@@ -16,7 +16,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     G4Material *worldMat = nist->FindOrBuildMaterial("G4_AIR"); // ROI(boundary) & material
     
     
-    // 设置产生切伦科夫辐射的材料构成：气凝胶（aerogel）SiO2, H2O, C
+    // 设置产生切伦科夫辐射的介质构成：气凝胶（aerogel）SiO2, H2O, C
     G4Material *SiO2 = new G4Material("SiO2", 2.201*g/cm3, 2);
     SiO2->AddElement(nist->FindOrBuildElement("Si"), 1);
     SiO2->AddElement(nist->FindOrBuildElement("O"), 2);
@@ -45,14 +45,19 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     mptWorld->AddProperty("RINDEX", energy, rindexWorld, 2);
     worldMat->SetMaterialPropertiesTable(mptWorld);
 
-    // 几何设置
+    // 辐射介质和world几何设置
     G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); // solid world
     G4LogicalVolume *logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld"); // logical world
     G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true); // physical world
 
-    G4Box *solidRadiator = new G4Box("solidRadiator", 0.4*m, 0.4*m, 0.01*m);
-    G4LogicalVolume *logicRadiator = new G4LogicalVolume(solidRadiator, Aerogel, "logicRadiator");
-    G4VPhysicalVolume *physRadiator = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.2*m), logicRadiator, "physRadiator", logicWorld, false, 0, true);
+    G4Box *solidRadiator = new G4Box("solidRadiator", 0.4*m, 0.4*m, 0.01*m); // solid radiator
+    G4LogicalVolume *logicRadiator = new G4LogicalVolume(solidRadiator, Aerogel, "logicRadiator"); // logical  radiator
+    G4VPhysicalVolume *physRadiator = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.2*m), logicRadiator, "physRadiator", logicWorld, false, 0, true); //  physical radiator
+
+    // 探测器定义
+    // 先定义solid空间，由于之后定义的灵敏体积要访问探测器的logical空间，因此需要在
+    G4Box *solidDetector = new G4Box("solidDetector", 0.005*m, 0.005*m, 0.01*m); // solid detector
+
 
 
     return physWorld;
