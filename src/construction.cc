@@ -32,14 +32,14 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     Aerogel->AddMaterial(H2O, 37.4*perCent);
     Aerogel->AddElement(C, 0.1*perCent);
 
-    // 设置切伦科夫辐射相关参数，momentum动量、refractive index(?)反射系数（要显示可见光光子，必须要设定材料的反射系数）
+    // 设置切伦科夫辐射相关参数，momentum动量、refractive index(?)折射率（要显示可见光光子，必须要设定材料的反射系数）
     G4double energy[2] = {1.239841939*eV/0.9, 1.239841939*eV/0.2};
     G4double rindexAerogel[2] = {1.1, 1.1};
     G4MaterialPropertiesTable *mptAerogel = new G4MaterialPropertiesTable();
     mptAerogel->AddProperty("RINDEX", energy, rindexAerogel, 2);
     Aerogel->SetMaterialPropertiesTable(mptAerogel);
 
-    // 设置world的反射系数，以显示光路
+    // 设置world的折射率，以显示光路
     G4double rindexWorld[2] = {1.0, 1.0};
     G4MaterialPropertiesTable *mptWorld = new G4MaterialPropertiesTable();
     mptWorld->AddProperty("RINDEX", energy, rindexWorld, 2);
