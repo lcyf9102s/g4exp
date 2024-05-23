@@ -54,10 +54,19 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     G4LogicalVolume *logicRadiator = new G4LogicalVolume(solidRadiator, Aerogel, "logicRadiator"); // logical  radiator
     G4VPhysicalVolume *physRadiator = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.2*m), logicRadiator, "physRadiator", logicWorld, false, 0, true); //  physical radiator
 
-    // 探测器定义
-    // 先定义solid空间，由于之后定义的灵敏体积要访问探测器的logical空间，因此需要在
+    // 探测器构建
+    // 先定义solid空间，由于之后定义的灵敏体积要外部访问探测器的logical空间，因此需要在头文件中MyDetectorConstruction类中定义
+    // 探测器的logical空间
     G4Box *solidDetector = new G4Box("solidDetector", 0.005*m, 0.005*m, 0.01*m); // solid detector
-
+    logicDetector = new G4LogicalVolume(solidDetector, worldMat, "logicDetector");
+    // 探测器阵列构建，使用for循环，构建一个100x100的探测器阵列
+    for(G4int i = 0; i < 100; i++)
+    {
+        for(G4int j = 0; j < 100; j++)
+        {
+            
+        }
+    }
 
 
     return physWorld;
