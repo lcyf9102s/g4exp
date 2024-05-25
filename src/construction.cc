@@ -46,9 +46,9 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     worldMat->SetMaterialPropertiesTable(mptWorld);
 
     // 辐射介质和world几何设置
-    G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); // solid world
+    G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); // solid world，一个0.5m*0.5m*0.5m的立方体
     G4LogicalVolume *logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld"); // logical world
-    G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true); // physical world
+    G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true); // physical world G4ThreeVector是中心点坐标
 
     G4Box *solidRadiator = new G4Box("solidRadiator", 0.4*m, 0.4*m, 0.01*m); // solid radiator
     G4LogicalVolume *logicRadiator = new G4LogicalVolume(solidRadiator, Aerogel, "logicRadiator"); // logical  radiator
@@ -64,10 +64,9 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     {
         for(G4int j = 0; j < 100; j++)
         {
-            
+            G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(-0.5*m+(i+0.5)*m/100, -0.5*m+(j+0.5)*m/100, 0.49*m), logicDetector, "physDetector", logicWorld, false,  j+i*100, true);
         }
     }
-
 
     return physWorld;
 }
