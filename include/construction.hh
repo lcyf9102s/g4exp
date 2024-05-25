@@ -9,6 +9,7 @@
 #include "G4LogicalVolume.hh"
 #include "G4VPhysicalVolume.hh"
 #include "G4PVPlacement.hh"
+#include "detector.hh"
 
 class MyDetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -20,6 +21,7 @@ public:
 
 private:
     G4LogicalVolume *logicDetector;
+    virtual void ConstructSDandField();
 };
 
 #endif

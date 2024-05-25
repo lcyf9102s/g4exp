@@ -1,6 +1,7 @@
 #include "construction.hh"
 
 
+
 MyDetectorConstruction::MyDetectorConstruction()
 {}
 
@@ -69,4 +70,10 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     }
 
     return physWorld;
+}
+
+void MyDetectorConstruction::ConstructSDandField()
+{
+    MySensitiveDetector *sensDet = new MySensitiveDetector("sensitiveDetector");
+    logicDetector->SetSensitiveDetector(sensDet);
 }
