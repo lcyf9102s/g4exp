@@ -46,7 +46,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     worldMat->SetMaterialPropertiesTable(mptWorld);
 
     // 辐射介质和world几何设置
-    G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); // solid world，一个0.5m*0.5m*0.5m的立方体
+    G4Box *solidWorld = new G4Box("solidWorld", 0.5*m, 0.5*m, 0.5*m); // solid world，一个1m*1m*1m的立方体（-0.5～0.5m）
     G4LogicalVolume *logicWorld = new G4LogicalVolume(solidWorld, worldMat, "logicWorld"); // logical world
     G4VPhysicalVolume *physWorld = new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), logicWorld, "physWorld", 0, false, 0, true); // physical world G4ThreeVector是中心点坐标
 
@@ -64,7 +64,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     {
         for(G4int j = 0; j < 100; j++)
         {
-            G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(-0.5*m+(i+0.5)*m/100, -0.5*m+(j+0.5)*m/100, 0.49*m), logicDetector, "physDetector", logicWorld, false,  j+i*100, true);
+            G4VPhysicalVolume *physDetector = new G4PVPlacement(0, G4ThreeVector(-0.5*m+0.005*(2*i+1)*m, -0.5*m+0.005*(2*j+1)*m, 0.49*m), logicDetector, "physDetector", logicWorld, false,  j+i*100, true);
         }
     }
 
