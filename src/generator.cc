@@ -4,15 +4,6 @@
 MyPrimaryGenerator::MyPrimaryGenerator()
 {
     fParticleGun = new G4ParticleGun(1);
-}
-
-MyPrimaryGenerator::~MyPrimaryGenerator()
-{
-    delete fParticleGun;
-}
-
-void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
-{
     G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
     G4String particleName = "proton";
     G4ParticleDefinition *particle = particleTable->FindParticle("proton");
@@ -33,9 +24,19 @@ void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
             uz = cosTheta;
 
     fParticleGun->SetParticlePosition(pos);
-    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(ux, uy, uz));
+    fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0., 0., 1.));
     fParticleGun->SetParticleMomentum(100.*GeV);
     fParticleGun->SetParticleDefinition(particle);
+}
+
+MyPrimaryGenerator::~MyPrimaryGenerator()
+{
+    delete fParticleGun;
+}
+
+void MyPrimaryGenerator::GeneratePrimaries(G4Event *anEvent)
+{
+    
 
     fParticleGun->GeneratePrimaryVertex(anEvent);
 }

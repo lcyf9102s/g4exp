@@ -17,21 +17,28 @@ int main(int argc, char** argv)
     runManager->SetUserInitialization(new MyActionInitialization());
     runManager->Initialize();
 
-    G4UIExecutive *ui = new G4UIExecutive(argc, argv);
+    G4UIExecutive *ui = 0;
+    if(argc == 1)
+    {
+        ui = new G4UIExecutive(argc, argv);
+    }
 
     G4VisManager *visManager = new G4VisExecutive();
-
-    visManager->Initialise();
-
+    visManager->Initialize();
     G4UImanager *UImanager = G4UImanager::GetUIpointer();
-    UImanager->ApplyCommand("/vis/open OGL");
-    UImanager->ApplyCommand("/vis/viewer/set/viewpointVector 1 1 1"); // 观察点位置坐标
-    UImanager->ApplyCommand("/vis/drawVolume"); // 显示几何结构
-    UImanager->ApplyCommand("/vis/viewer/set/autoRefresh true"); // 自动刷新on
-    UImanager->ApplyCommand("/vis/scene/add/trajectories smooth");
-    UImanager->ApplyCommand("/vis/scene/endOfEventAction accumulate"); // 累积径迹
 
-    ui->SessionStart();
+    if (ui)
+    {
+        
+        UImanager->ApplyCommand("/control/execute vis.mac");
+        ui->SessionStart(); 
+    }
+    else
+    {
+        G4String command = "/control/execute ";
+        G4String fileName = argv[1];
+        UImanager->ApplyCommand(command+fileName);
+    }
 
     return 0;
 }

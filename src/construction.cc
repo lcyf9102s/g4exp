@@ -60,7 +60,7 @@ G4VPhysicalVolume *MyDetectorConstruction::Construct()
     // 探测器的logical空间
     G4Box *solidDetector = new G4Box("solidDetector", 0.005*m, 0.005*m, 0.01*m); // solid detector
     logicDetector = new G4LogicalVolume(solidDetector, worldMat, "logicDetector");
-    // 探测器阵列构建，使用for循环，构建一个100x100的探测器阵列
+    // 探测器阵列构建，使用for循环，构建一个100x100的探测器阵列，并给每一个探测器单元编号
     for(G4int i = 0; i < 100; i++)
     {
         for(G4int j = 0; j < 100; j++)
