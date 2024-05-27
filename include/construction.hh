@@ -2,6 +2,7 @@
 #define CONSTRUCTION_HH
 
 #include "G4VUserDetectorConstruction.hh"
+#include "G4GenericMessenger.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4NistManager.hh"
 #include "G4Material.hh"
@@ -20,8 +21,18 @@ public:
     virtual G4VPhysicalVolume *Construct();
 
 private:
-    G4LogicalVolume *logicDetector;
     virtual void ConstructSDandField();
+
+    G4int nCols, nRows;
+    G4Material *SiO2, *H2O, *Aerogel, *worldMat;
+    G4Element *C;
+    G4Box *solidWorld, *solidRadiator, *solidDetector;
+    G4LogicalVolume *logicWorld, *logicRadiator, *logicDetector;
+    G4VPhysicalVolume *physWorld, *physRadiator, *physDetector;
+
+    void DefineMaterials();
+
+    G4GenericMessenger *fMessenger;
 };
 
 #endif
